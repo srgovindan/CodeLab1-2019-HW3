@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        // SINGLETON PATTERN
         if (instance == null)
         {
             DontDestroyOnLoad(gameObject);

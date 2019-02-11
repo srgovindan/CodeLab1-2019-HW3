@@ -20,6 +20,7 @@ public class HugScript : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Debug.Log("HIT!");
+        GameManager.instance.Score++; 
         SceneManager.LoadScene(1);
     }
 }
