@@ -9,7 +9,11 @@ public class GameManager : MonoBehaviour
     private int score = 0;
     public int Score
     {
-        get { return score; }
+        get
+        {
+            //Debug.Log("Someone got the score.");
+            return score;
+        }
         set
         {
             score = value;
@@ -19,10 +23,11 @@ public class GameManager : MonoBehaviour
                 Debug.Log("AWESOME");
                 score = 0;
             }
-            Debug.Log("Score was set to: " + value);
+            //Debug.Log("Score was set to: " + value);
         }
     }
 
+    public static GameManager instance;
 
 //Health variable that only ranges from 0 to 100
     private int health;
@@ -43,17 +48,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Score ++;
+        //print("Your current score is:" + Score);
     }
  
 }
