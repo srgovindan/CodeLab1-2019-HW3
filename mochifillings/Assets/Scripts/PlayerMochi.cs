@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class PlayerMochi : MonoBehaviour
 {
@@ -12,8 +13,11 @@ public class PlayerMochi : MonoBehaviour
     public KeyCode DiveKey;
 
     private Rigidbody2D mochiRB;
+
+    private bool isWallCling;
+    private bool isMidair;
     private bool isGrounded;
-    private float distanceToGround = .5f;
+    private float rayDistance = .2f;
 
     private float groundVelocity = 2f;
     private float jumpVelocity = 5f;
@@ -23,15 +27,39 @@ public class PlayerMochi : MonoBehaviour
     
     void Start()
     {
-        mochiRB = GetComponent<Rigidbody2D>();        
+        mochiRB = GetComponent<Rigidbody2D>();  
+        // setting up layer mask to only raycast on terrain layer
+        layerMask = 1 << 9;
     }
 
     void Update()
     {
         Move();
-        Debug.Log("Is Grounded: " + isGrounded);
+        WallCling();
+
+        //Reload scene on 'R'
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
+        //Debug.Log("Is Grounded: " + isGrounded);
     }
 
+    void WallCling()
+    {
+        //LEFT
+        if (Physics2D.Raycast(transform.position,Vector2.left,rayDistance,layerMask))
+        {
+         Debug.Log("Hit LEFT wall");   
+        }
+        //RIGHT
+        if (Physics2D.Raycast(transform.position,Vector2.right,rayDistance,layerMask))
+        {
+            Debug.Log("Hit RIGHT wall");   
+        }     
+    }
+    
+    
     void Move()
     {
         Vector2 newMochiVelocity = new Vector2();
@@ -55,19 +83,16 @@ public class PlayerMochi : MonoBehaviour
         
         // set new Mochi velocity 
         mochiRB.velocity = newMochiVelocity;
-  
         
-        // setting up layer mask to only raycast on terrain layer
-        layerMask = 1 << 9;
         // raycasting to check if grounded
-        if(Physics2D.Raycast(transform.position,Vector2.down, distanceToGround,layerMask))
+        if(Physics2D.Raycast(transform.position,Vector2.down, rayDistance,layerMask))
         {
-            Debug.Log("Setting is grounded to true");
+            //Debug.Log("Setting is grounded to true");
             isGrounded = true;
         }
         else
         {
-            Debug.Log("Setting is grounded to false");
+            //Debug.Log("Setting is grounded to false");
             isGrounded = false;
         }
     }

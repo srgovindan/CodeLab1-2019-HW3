@@ -6,7 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    // WRAPPERS
+    // PROPERTIES: they work like wrappers on variables
     private int score = 0;
     public int Score
     {
