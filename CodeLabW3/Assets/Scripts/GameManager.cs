@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
+    // WRAPPERS
     private int score = 0;
     public int Score
     {
