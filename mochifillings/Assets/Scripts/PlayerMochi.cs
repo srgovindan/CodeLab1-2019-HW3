@@ -78,7 +78,7 @@ public class PlayerMochi : MonoBehaviour
         else if (Input.GetKey(JumpKey) && isGrounded)
         {
             //newMochiVelocity.y += jumpVelocity;
-            mochiRB.AddForce(Vector2.up * 500);
+            mochiRB.AddForce(Vector2.up * 300);
         }
         
         // set new Mochi velocity 
