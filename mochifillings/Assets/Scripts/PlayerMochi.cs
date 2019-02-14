@@ -84,8 +84,6 @@ public class PlayerMochi : MonoBehaviour
             isGrounded = false;
             mochiRB.AddForce(Vector2.up * jumpForce);
         }
-        // set new Mochi velocity 
-        //mochiRB.velocity = newMochiVelocity;
         
         // raycasting to check if grounded
         if (Physics2D.Raycast(transform.position, Vector2.down, rayDistance, layerMask))
