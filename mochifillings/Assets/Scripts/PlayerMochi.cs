@@ -20,7 +20,7 @@ public class PlayerMochi : MonoBehaviour
     private float rayDistance = .2f;
 
     private float groundVelocity = 2f;
-    private float jumpVelocity = 5f;
+    private float jumpForce = 300f;
     private float diveVelocity = 5f;
 
     private LayerMask layerMask;
@@ -50,12 +50,14 @@ public class PlayerMochi : MonoBehaviour
         //LEFT
         if (Physics2D.Raycast(transform.position,Vector2.left,rayDistance,layerMask))
         {
-         Debug.Log("Hit LEFT wall");   
+            //Debug.Log("Hit LEFT wall");
+            isWallCling = true;
         }
         //RIGHT
         if (Physics2D.Raycast(transform.position,Vector2.right,rayDistance,layerMask))
         {
-            Debug.Log("Hit RIGHT wall");   
+            //Debug.Log("Hit RIGHT wall");   
+            isWallCling = true;
         }     
     }
     
@@ -77,23 +79,22 @@ public class PlayerMochi : MonoBehaviour
         }
         else if (Input.GetKey(JumpKey) && isGrounded)
         {
-            //newMochiVelocity.y += jumpVelocity;
-            mochiRB.AddForce(Vector2.up * 300);
+            isWallCling = false;
+            isMidair = true;
+            isGrounded = false;
+            mochiRB.AddForce(Vector2.up * jumpForce);
         }
-        
         // set new Mochi velocity 
-        mochiRB.velocity = newMochiVelocity;
+        //mochiRB.velocity = newMochiVelocity;
         
         // raycasting to check if grounded
-        if(Physics2D.Raycast(transform.position,Vector2.down, rayDistance,layerMask))
+        if (Physics2D.Raycast(transform.position, Vector2.down, rayDistance, layerMask))
         {
-            //Debug.Log("Setting is grounded to true");
+            isWallCling = false;
+            isMidair = false;
             isGrounded = true;
-        }
-        else
-        {
-            //Debug.Log("Setting is grounded to false");
-            isGrounded = false;
+            //set velocity to zero when landing
+            mochiRB.velocity = Vector2.zero;
         }
     }
 }
