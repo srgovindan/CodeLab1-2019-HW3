@@ -15,7 +15,10 @@ public class PlayerMochi : MonoBehaviour
     public KeyCode DownKey;
 
     private Rigidbody2D mochiRB;
-
+    
+    private float rayDistance = .2f;
+    private LayerMask layerMask = 1 << 9; //layermask only hits terrain layer
+    
     private enum state
     {
         Grounded,
@@ -23,20 +26,13 @@ public class PlayerMochi : MonoBehaviour
         WallCling,
     };
     private state mochiState;
+   
+    private float groundForce = 5f;
+    private float airForce = 3f;
+    private float jumpForce = 100f;
+    private float diveForce = 50f;
+    private float clingForce = 50f;
 
-    private bool isWallCling;
-    private bool isMidair;
-    private bool isGrounded;
-    
-    private float rayDistance = .2f;
-
-    private float groundVelocity = 2f;
-    private float airVelocity = 1f;
-    private float diveVelocity = 5f;
-    private float jumpForce = 300f;
-
-
-    private LayerMask layerMask = 1 << 9; //layermask only hits terrain layer
     
     void Start()
     {
@@ -52,13 +48,11 @@ public class PlayerMochi : MonoBehaviour
         {
             SceneManager.LoadScene(0);
         }
-        //Debug.Log("Is Grounded: " + isGrounded);
     }
 
     void Move()
     {
-        // create empty velocity & force vectors
-        Vector2 newMochiVelocity = new Vector2();
+        // create empty force vectors
         Vector2 newMochiForce = new Vector2();
         
         // raycast to set state
@@ -82,7 +76,6 @@ public class PlayerMochi : MonoBehaviour
             }
         }
         
-        
         // switch case to allow different player movement
         switch (mochiState)
         {
@@ -94,81 +87,112 @@ public class PlayerMochi : MonoBehaviour
                 }
                 if (Input.GetKey(LeftKey))
                 {
-                    newMochiVelocity += Vector2.left * groundVelocity; 
+                    newMochiForce += Vector2.left * groundForce; 
                 }
                 if (Input.GetKey(RightKey))
                 {
-                    newMochiVelocity += Vector2.right * groundVelocity; 
+                    newMochiForce += Vector2.right * groundForce;
                 }
                 break;
             case state.Midair:
                 //midair controls
-                
+                if (Input.GetKey(DownKey))
+                {
+                    newMochiForce += Vector2.down * diveForce;
+                }
+                if (Input.GetKey(LeftKey))
+                {
+                    newMochiForce += Vector2.left * airForce;
+                }
+                if (Input.GetKey(RightKey))
+                {
+                    newMochiForce += Vector2.right * airForce;
+                }
                 break;
             case state.WallCling:
                 //wall cling controls
-                
+                if (Input.GetKey(UpKey))
+                {
+                    newMochiForce += Vector2.up * jumpForce;
+                }
+                if (Input.GetKey(RightKey))
+                {
+                    if (sideRight)
+                    {
+                        newMochiForce += Vector2.right * clingForce;
+                    }
+                    else
+                    {
+                        newMochiForce += Vector2.right * airForce;
+                    }
+                }
+                if (Input.GetKey(LeftKey))
+                {
+                    if (sideLeft)
+                    {
+                        newMochiForce += Vector2.left * clingForce;
+                    }
+                    else
+                    {
+                        newMochiForce += Vector2.left * airForce;
+                    }
+                }
                 break;
         }
-        //Debug.Log(mochiState);
+        
+        Debug.Log(mochiState);
         // set playerMochi forces & velocity
-        mochiRB.velocity = newMochiVelocity;
         mochiRB.AddForce(newMochiForce);
     }
     
-    
-    
-    
-    
-    
-    void _Move()
-    {
-        Vector2 newMochiVelocity = new Vector2();
-        if (Input.GetKey(LeftKey))
-        {
-            newMochiVelocity.x += -groundVelocity;
-        }
-        if (Input.GetKey(RightKey))
-        {
-            newMochiVelocity.x += groundVelocity;
-        }
-        if (Input.GetKey(DownKey))
-        {
-                newMochiVelocity.y = +-diveVelocity;
-        }
-        else if (Input.GetKey(UpKey) && isGrounded)
-        {
-            isWallCling = false;
-            isMidair = true;
-            isGrounded = false;
-            mochiRB.AddForce(Vector2.up * jumpForce);
-        }
-        // setting horizontal and dive movement velocities
-        mochiRB.velocity = newMochiVelocity;
-        
-        // raycasting to check if grounded
-        if (Physics2D.Raycast(transform.position, Vector2.down, rayDistance, layerMask))
-        {
-            if (isMidair)
-            {
-                //set velocity to zero when landing
-                mochiRB.velocity = Vector2.zero;
-            }
-            isWallCling = false;
-            isMidair = false;
-            isGrounded = true;
-        }
-        
-        // raycasting left & right to check for walls 
-        if (Physics2D.Raycast(transform.position,Vector2.left,rayDistance,layerMask) || Physics2D.Raycast(transform.position,Vector2.right,rayDistance,layerMask))
-        {
-            //Debug.Log("Hit LEFT wall");
-            isWallCling = true;
-            isMidair = false;
-            isGrounded = false;
-            // set horizontal velocity to 0
-            newMochiVelocity.x = 0;
-            mochiRB.velocity = newMochiVelocity;
-        }
-    }
+//    void _Move()
+//    {
+//        Vector2 newMochiVelocity = new Vector2();
+//        if (Input.GetKey(LeftKey))
+//        {
+//            newMochiVelocity.x += -groundVelocity;
+//        }
+//        if (Input.GetKey(RightKey))
+//        {
+//            newMochiVelocity.x += groundVelocity;
+//        }
+//        if (Input.GetKey(DownKey))
+//        {
+//                newMochiVelocity.y = +-diveVelocity;
+//        }
+//        else if (Input.GetKey(UpKey) && isGrounded)
+//        {
+//            isWallCling = false;
+//            isMidair = true;
+//            isGrounded = false;
+//            mochiRB.AddForce(Vector2.up * jumpForce);
+//        }
+//        // setting horizontal and dive movement velocities
+//        mochiRB.velocity = newMochiVelocity;
+//        
+//        // raycasting to check if grounded
+//        if (Physics2D.Raycast(transform.position, Vector2.down, rayDistance, layerMask))
+//        {
+//            if (isMidair)
+//            {
+//                //set velocity to zero when landing
+//                mochiRB.velocity = Vector2.zero;
+//            }
+//            isWallCling = false;
+//            isMidair = false;
+//            isGrounded = true;
+//        }
+//        
+//        // raycasting left & right to check for walls 
+//        if (Physics2D.Raycast(transform.position,Vector2.left,rayDistance,layerMask) || Physics2D.Raycast(transform.position,Vector2.right,rayDistance,layerMask))
+//        {
+//            //Debug.Log("Hit LEFT wall");
+//            isWallCling = true;
+//            isMidair = false;
+//            isGrounded = false;
+//            // set horizontal velocity to 0
+//            newMochiVelocity.x = 0;
+//            mochiRB.velocity = newMochiVelocity;
+//        }
+//    }
 }
