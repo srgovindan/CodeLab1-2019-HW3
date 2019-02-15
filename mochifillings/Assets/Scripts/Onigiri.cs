@@ -6,7 +6,7 @@ public class Onigiri : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Entered collision.");
+        //Debug.Log("Entered collision.");
         if (other.gameObject.CompareTag("Player"))
         {
             Debug.Log("Collided with player.");

@@ -3961,10 +3961,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8a11c2f0bb34471587e8bdaaef87148, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpKey: 119
+  UpKey: 119
   LeftKey: 97
   RightKey: 100
-  DiveKey: 115
+  DownKey: 115
 --- !u!70 &1975044533
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
