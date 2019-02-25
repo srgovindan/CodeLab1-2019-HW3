@@ -1285,6 +1285,12 @@ TilemapCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+--- !u!4 &808210613 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
+    type: 3}
+  m_PrefabInstance: {fileID: 458630856225864615}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1176645394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1499,6 +1505,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1930578155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930578156}
+  m_Layer: 0
+  m_Name: OnigiriContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1930578156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930578155}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.293898, y: 0.18153444, z: -0.043347}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 808210613}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975044531 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3920849648813846028, guid: 43d4a585bea56471d89123bb1c141453,
@@ -1576,7 +1613,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1930578156}
     m_Modifications:
     - target: {fileID: 458630855963142111, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
@@ -1586,17 +1623,17 @@ PrefabInstance:
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.25800002
+      value: 1.551898
       objectReference: {fileID: 0}
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6880001
+      value: -0.8695345
       objectReference: {fileID: 0}
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.043347
       objectReference: {fileID: 0}
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
@@ -1621,7 +1658,7 @@ PrefabInstance:
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 458630855963142108, guid: 9df934bd8b08a432db8601e08ecd0081,
         type: 3}
@@ -1997,6 +2034,6 @@ PrefabInstance:
         type: 3}
       propertyPath: OnigiriContainer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1930578155}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5efbb1dfdc1d449b904a2c9a293f164, type: 3}

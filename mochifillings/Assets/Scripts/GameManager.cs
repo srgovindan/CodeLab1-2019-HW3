@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public GameObject OnigiriContainer;
+    private GameObject OnigiriContainer;
 
 
     private int maxLifes = 3;
@@ -53,13 +53,25 @@ public class GameManager : MonoBehaviour
         
         //Set initial Mochi Lifes
         MochiLifes = maxLifes;
+        
+        //Find Onigiri Container
+        OnigiriContainer = GameObject.Find("OnigiriContainer");
+        Debug.Log(OnigiriContainer);
     }
 
     void Update()
     {
-
+       LoadNextLevel();
     }
 
+    void LoadNextLevel()
+    {
+        if (OnigiriContainer.transform.childCount < 1)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+    
     /// <summary>
     /// Increases the number of mochi lifes. 
     /// </summary>
