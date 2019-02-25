@@ -29,9 +29,12 @@ public class PlayerMochi : MonoBehaviour
    
     private float groundForce = 5f;
     private float airForce = 3f;
-    private float jumpForce = 100f;
-    private float diveForce = 50f;
-    private float clingForce = 50f;
+    private float jumpForce = 10f;
+    private float diveForce = 5f;
+    private float clingForce = 5f;
+    
+    // PROPERTIES 
+    
 
     
     void Start()
@@ -150,6 +153,7 @@ public class PlayerMochi : MonoBehaviour
         }
 
         Debug.Log(mochiState);
+        //Debug.Log("Force on Mochi: " + newMochiForce);
         // set playerMochi forces & velocity
         mochiRB.AddForce(newMochiForce);
     }
